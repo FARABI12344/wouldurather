@@ -7,6 +7,7 @@ const questions = [
 ];
 
 let currentQuestionIndex = 0;
+let canAnswer = true;
 
 // Load Question
 function displayQuestion() {
@@ -20,6 +21,12 @@ function displayQuestion() {
 
 // Handle Answer Selection
 function handleAnswer(answer) {
+    if (!canAnswer) {
+        showErrorPopup();
+        return;
+    }
+
+    canAnswer = false;
     document.getElementById("selected-answer").innerText = answer;
     document.getElementById("percentage").innerText = `Chosen by: ${Math.floor(Math.random() * 100)}% of users`;
     document.getElementById("result").classList.remove("hidden");
@@ -27,6 +34,26 @@ function handleAnswer(answer) {
     setTimeout(() => {
         currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
         displayQuestion();
+        showSuccessPopup();
+        canAnswer = true;
+    }, 2000);
+}
+
+// Show Error Popup
+function showErrorPopup() {
+    const errorPopup = document.getElementById("error-popup");
+    errorPopup.classList.remove("hidden");
+    setTimeout(() => {
+        errorPopup.classList.add("hidden");
+    }, 2000);
+}
+
+// Show Success Popup
+function showSuccessPopup() {
+    const successPopup = document.getElementById("success-popup");
+    successPopup.classList.remove("hidden");
+    setTimeout(() => {
+        successPopup.classList.add("hidden");
     }, 2000);
 }
 
