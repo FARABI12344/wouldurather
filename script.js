@@ -99,3 +99,4 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById("mode-toggle").addEventListener("change", toggleMode);
 document.getElementById("option1").addEventListener("click", (e) => handleAnswer(e.target.innerText));
 document.getElementById("option2").addEventListener("click", (e) => handleAnswer(e.target.innerText));
+
