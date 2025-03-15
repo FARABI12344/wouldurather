@@ -1,6 +1,4 @@
-// Customize your questions here in the format:
-// { question: "Your question", option1: "Option 1", option2: "Option 2" }
-
+// Customize your questions here
 const questions = [
     { question: "Would you rather live in the city or the countryside?", option1: "City", option2: "Countryside" },
     { question: "Would you rather be able to fly or be invisible?", option1: "Fly", option2: "Invisible" },
@@ -11,6 +9,7 @@ const questions = [
 ];
 
 let currentQuestionIndex = 0;
+let selectedAnswer = "";
 
 function displayQuestion() {
     const questionObj = questions[currentQuestionIndex];
@@ -19,15 +18,32 @@ function displayQuestion() {
     document.getElementById("option2").innerText = questionObj.option2;
     document.getElementById("result").classList.add("hidden");
     document.getElementById("next-button").classList.add("hidden");
+    document.getElementById("percentage").innerText = "";
 }
 
 document.getElementById("option1").addEventListener("click", () => handleAnswer("Option 1"));
 document.getElementById("option2").addEventListener("click", () => handleAnswer("Option 2"));
 
 function handleAnswer(answer) {
+    selectedAnswer = answer;
     document.getElementById("selected-answer").innerText = answer;
+
+    // Show percentage (customizable as needed)
+    const percentage = Math.floor(Math.random() * 100) + "%";
+    document.getElementById("percentage").innerText = `Option selected: ${percentage}`;
+
     document.getElementById("result").classList.remove("hidden");
     document.getElementById("next-button").classList.remove("hidden");
+
+    setTimeout(() => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            displayQuestion();
+        } else {
+            currentQuestionIndex = 0;
+            displayQuestion();
+        }
+    }, 2000); // Wait 2 seconds before showing the next question
 }
 
 document.getElementById("next-button").addEventListener("click", () => {
@@ -35,10 +51,17 @@ document.getElementById("next-button").addEventListener("click", () => {
     if (currentQuestionIndex < questions.length) {
         displayQuestion();
     } else {
-        document.getElementById("question-container").innerHTML = "<p>Game Over! Thanks for playing!</p>";
-        document.getElementById("next-button").classList.add("hidden");
+        currentQuestionIndex = 0;
+        displayQuestion();
     }
 });
 
 // Initialize the game by displaying the first question
 displayQuestion();
+
+// Toggle Dark/Light Mode
+function toggleMode() {
+    const body = document.body;
+    body.classList.toggle("dark-mode");
+    body.classList.toggle("light-mode");
+}
