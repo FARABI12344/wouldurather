@@ -8,6 +8,7 @@ const questions = [
 
 let currentQuestionIndex = 0;
 
+// Load Question
 function displayQuestion() {
     const questionObj = questions[currentQuestionIndex];
     document.getElementById("question").innerText = questionObj.question;
@@ -17,15 +18,10 @@ function displayQuestion() {
     document.getElementById("percentage").innerText = "";
 }
 
-document.getElementById("option1").addEventListener("click", () => handleAnswer("Option 1"));
-document.getElementById("option2").addEventListener("click", () => handleAnswer("Option 2"));
-
+// Handle Answer Selection
 function handleAnswer(answer) {
     document.getElementById("selected-answer").innerText = answer;
-
-    const percentage = Math.floor(Math.random() * 100) + "%";
-    document.getElementById("percentage").innerText = `Option selected: ${percentage}`;
-
+    document.getElementById("percentage").innerText = `Chosen by: ${Math.floor(Math.random() * 100)}% of users`;
     document.getElementById("result").classList.remove("hidden");
 
     setTimeout(() => {
@@ -34,10 +30,25 @@ function handleAnswer(answer) {
     }, 2000);
 }
 
+// Dark Mode Toggle
 function toggleMode() {
     document.body.classList.toggle("dark-mode");
     document.body.classList.toggle("light-mode");
+
+    const isDarkMode = document.body.classList.contains("dark-mode");
+    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
 }
 
-// Initialize
-displayQuestion();
+// Apply Theme on Load
+document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    document.body.classList.add(savedTheme + "-mode");
+    document.getElementById("mode-toggle").checked = savedTheme === "dark";
+
+    displayQuestion();
+});
+
+// Event Listeners
+document.getElementById("mode-toggle").addEventListener("change", toggleMode);
+document.getElementById("option1").addEventListener("click", (e) => handleAnswer(e.target.innerText));
+document.getElementById("option2").addEventListener("click", (e) => handleAnswer(e.target.innerText));
