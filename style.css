@@ -1,125 +1,51 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+const questions = [
+    { question: "Would you rather live in the city or the countryside?", option1: "City", option2: "Countryside" },
+    { question: "Would you rather be able to fly or be invisible?", option1: "Fly", option2: "Invisible" },
+    { question: "Would you rather have a pet dragon or a pet unicorn?", option1: "Dragon", option2: "Unicorn" },
+    { question: "Would you rather have unlimited money or unlimited time?", option1: "Unlimited Money", option2: "Unlimited Time" },
+    { question: "Would you rather be a famous actor or a famous musician?", option1: "Actor", option2: "Musician" },
+];
+
+let currentQuestionIndex = 0;
+
+function displayQuestion() {
+    const questionObj = questions[currentQuestionIndex];
+    document.getElementById("question").innerText = questionObj.question;
+    document.getElementById("option1").innerText = questionObj.option1;
+    document.getElementById("option2").innerText = questionObj.option2;
+    document.getElementById("result").classList.add("hidden");
+    document.getElementById("next-button").classList.add("hidden");
+    document.getElementById("percentage").innerText = "";
 }
 
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    background-color: #f1f1f1;
-    transition: background-color 0.3s ease;
+document.getElementById("option1").addEventListener("click", () => handleAnswer("Option 1"));
+document.getElementById("option2").addEventListener("click", () => handleAnswer("Option 2"));
+
+function handleAnswer(answer) {
+    document.getElementById("selected-answer").innerText = answer;
+
+    const percentage = Math.floor(Math.random() * 100) + "%";
+    document.getElementById("percentage").innerText = `Option selected: ${percentage}`;
+
+    document.getElementById("result").classList.remove("hidden");
+    document.getElementById("next-button").classList.remove("hidden");
+
+    setTimeout(() => {
+        currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+        displayQuestion();
+    }, 2000);
 }
 
-.game-container {
-    background-color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 600px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+document.getElementById("next-button").addEventListener("click", () => {
+    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+    displayQuestion();
+});
+
+function toggleMode() {
+    const body = document.body;
+    body.classList.toggle("dark-mode");
+    body.classList.toggle("light-mode");
 }
 
-h1 {
-    margin-bottom: 20px;
-    font-size: 36px;
-}
-
-.option-btn {
-    width: 100%;
-    padding: 20px;
-    margin: 15px 0;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.option-btn:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-}
-
-.option-btn:active {
-    background-color: #3e8e41;
-}
-
-#result {
-    font-size: 20px;
-    margin-top: 20px;
-}
-
-.hidden {
-    display: none;
-}
-
-#mode-toggle {
-    margin-top: 20px;
-}
-
-body.dark-mode {
-    background-color: #333;
-}
-
-body.dark-mode .game-container {
-    background-color: #444;
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-}
-
-body.dark-mode .option-btn {
-    background-color: #9b1e75;
-    color: white;
-}
-
-body.dark-mode .option-btn:hover {
-    background-color: #8e1869;
-}
-
-body.dark-mode .option-btn:active {
-    background-color: #7a1561;
-}
-
-body.dark-mode .game-container {
-    animation: pulse 3s infinite;
-}
-
-body.light-mode {
-    background-color: #fff;
-}
-
-body.light-mode .game-container {
-    background-color: #f8f8f8;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-body.light-mode .option-btn {
-    background-color: #ff79c6;
-    color: black;
-}
-
-body.light-mode .option-btn:hover {
-    background-color: #ff64a1;
-}
-
-body.light-mode .option-btn:active {
-    background-color: #ff4c8b;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5);
-    }
-    50% {
-        box-shadow: 0 0 40px 10px rgba(255, 255, 255, 0.5);
-    }
-    100% {
-        box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5);
-    }
-}
+// Initialize
+displayQuestion();
