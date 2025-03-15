@@ -1,38 +1,24 @@
 const questions = [
     {
-        question: "Would you rather live in the city or the countryside?",
-        option1: "City",
-        option2: "Countryside",
-        percentage1: 60, // Custom percentage for option 1
-        percentage2: 40  // Custom percentage for option 2
-    },
-    {
         question: "Would you rather be able to fly or be invisible?",
         option1: "Fly",
         option2: "Invisible",
-        percentage1: 70, // Custom percentage for option 1
-        percentage2: 30  // Custom percentage for option 2
-    },
-    {
-        question: "Would you rather have a pet dragon or a pet unicorn?",
-        option1: "Dragon",
-        option2: "Unicorn",
-        percentage1: 55, // Custom percentage for option 1
-        percentage2: 45  // Custom percentage for option 2
+        percentage1: 50, // Custom percentage for Fly
+        percentage2: 50  // Custom percentage for Invisible
     },
     {
         question: "Would you rather have unlimited money or unlimited time?",
         option1: "Unlimited Money",
         option2: "Unlimited Time",
-        percentage1: 80, // Custom percentage for option 1
-        percentage2: 20  // Custom percentage for option 2
+        percentage1: 70, // Custom percentage for Unlimited Money
+        percentage2: 30  // Custom percentage for Unlimited Time
     },
     {
-        question: "Would you rather be a famous actor or a famous musician?",
-        option1: "Actor",
-        option2: "Musician",
-        percentage1: 50, // Custom percentage for option 1
-        percentage2: 50  // Custom percentage for option 2
+        question: "Would you rather have a pet dragon or a pet unicorn?",
+        option1: "Dragon",
+        option2: "Unicorn",
+        percentage1: 60, // Custom percentage for Dragon
+        percentage2: 40  // Custom percentage for Unicorn
     },
 ];
 
