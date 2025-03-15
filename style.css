@@ -1,51 +1,139 @@
-const questions = [
-    { question: "Would you rather live in the city or the countryside?", option1: "City", option2: "Countryside" },
-    { question: "Would you rather be able to fly or be invisible?", option1: "Fly", option2: "Invisible" },
-    { question: "Would you rather have a pet dragon or a pet unicorn?", option1: "Dragon", option2: "Unicorn" },
-    { question: "Would you rather have unlimited money or unlimited time?", option1: "Unlimited Money", option2: "Unlimited Time" },
-    { question: "Would you rather be a famous actor or a famous musician?", option1: "Actor", option2: "Musician" },
-];
-
-let currentQuestionIndex = 0;
-
-function displayQuestion() {
-    const questionObj = questions[currentQuestionIndex];
-    document.getElementById("question").innerText = questionObj.question;
-    document.getElementById("option1").innerText = questionObj.option1;
-    document.getElementById("option2").innerText = questionObj.option2;
-    document.getElementById("result").classList.add("hidden");
-    document.getElementById("next-button").classList.add("hidden");
-    document.getElementById("percentage").innerText = "";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-document.getElementById("option1").addEventListener("click", () => handleAnswer("Option 1"));
-document.getElementById("option2").addEventListener("click", () => handleAnswer("Option 2"));
-
-function handleAnswer(answer) {
-    document.getElementById("selected-answer").innerText = answer;
-
-    const percentage = Math.floor(Math.random() * 100) + "%";
-    document.getElementById("percentage").innerText = `Option selected: ${percentage}`;
-
-    document.getElementById("result").classList.remove("hidden");
-    document.getElementById("next-button").classList.remove("hidden");
-
-    setTimeout(() => {
-        currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
-        displayQuestion();
-    }, 2000);
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #222;
+    transition: background-color 0.5s ease;
 }
 
-document.getElementById("next-button").addEventListener("click", () => {
-    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
-    displayQuestion();
-});
-
-function toggleMode() {
-    const body = document.body;
-    body.classList.toggle("dark-mode");
-    body.classList.toggle("light-mode");
+.game-container {
+    padding: 40px;
+    border-radius: 20px;
+    width: 600px;
+    background: linear-gradient(45deg, purple, darkpink);
+    box-shadow: 0px 0px 20px rgba(255, 0, 255, 0.8);
+    transition: all 0.5s ease;
 }
 
-// Initialize
-displayQuestion();
+h1 {
+    font-size: 42px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+#question {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.option-btn {
+    width: 100%;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option-btn:hover {
+    transform: scale(1.05);
+}
+
+.option-btn:active {
+    transform: scale(0.95);
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #111;
+}
+
+body.dark-mode .game-container {
+    background: linear-gradient(45deg, #8a2be2, #ff1493);
+}
+
+body.dark-mode .option-btn {
+    background-color: black;
+    color: white;
+}
+
+body.dark-mode .or-text {
+    color: white;
+}
+
+/* Light Mode */
+body.light-mode {
+    background-color: white;
+}
+
+body.light-mode .game-container {
+    background: linear-gradient(45deg, #ff99cc, #d599ff);
+    box-shadow: 0px 0px 20px rgba(255, 150, 255, 0.8);
+}
+
+body.light-mode .option-btn {
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+}
+
+.or-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* Toggle Switch */
+.toggle-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+#mode-toggle {
+    display: none;
+}
+
+.toggle-label {
+    width: 50px;
+    height: 25px;
+    background: white;
+    border-radius: 50px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.toggle-label::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 2.5px;
+    left: 3px;
+    transition: 0.3s ease;
+}
+
+#mode-toggle:checked + .toggle-label {
+    background: black;
+}
+
+#mode-toggle:checked + .toggle-label::after {
+    left: 27px;
+    background: white;
+}
