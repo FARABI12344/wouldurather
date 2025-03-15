@@ -75,6 +75,38 @@ h1 {
     display: none;
 }
 
+/* Popup */
+.popup {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    animation: slideUp 0.5s ease-out;
+}
+
+#error-popup {
+    background-color: #ff4444;
+}
+
+#success-popup {
+    background-color: #00C851;
+}
+
+@keyframes slideUp {
+    from {
+        bottom: -50px;
+        opacity: 0;
+    }
+    to {
+        bottom: 20px;
+        opacity: 1;
+    }
+}
+
 /* Dark Mode */
 body.dark-mode {
     background-color: #111;
