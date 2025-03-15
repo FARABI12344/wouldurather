@@ -28,7 +28,16 @@ function handleAnswer(answer) {
 
     canAnswer = false;
     document.getElementById("selected-answer").innerText = answer;
-    document.getElementById("percentage").innerText = `Chosen by: ${Math.floor(Math.random() * 100)}% of users`;
+    const percentage = Math.floor(Math.random() * 100);
+    document.getElementById("percentage").innerText = `Chosen by: ${percentage}% of users`;
+
+    // Update the selected option text with the percentage
+    if (answer === questions[currentQuestionIndex].option1) {
+        document.getElementById("option1").innerText = `${questions[currentQuestionIndex].option1} - ${percentage}%`;
+    } else {
+        document.getElementById("option2").innerText = `${questions[currentQuestionIndex].option2} - ${percentage}%`;
+    }
+
     document.getElementById("result").classList.remove("hidden");
 
     setTimeout(() => {
