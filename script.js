@@ -1,9 +1,39 @@
 const questions = [
-    { question: "Would you rather live in the city or the countryside?", option1: "City", option2: "Countryside" },
-    { question: "Would you rather be able to fly or be invisible?", option1: "Fly", option2: "Invisible" },
-    { question: "Would you rather have a pet dragon or a pet unicorn?", option1: "Dragon", option2: "Unicorn" },
-    { question: "Would you rather have unlimited money or unlimited time?", option1: "Unlimited Money", option2: "Unlimited Time" },
-    { question: "Would you rather be a famous actor or a famous musician?", option1: "Actor", option2: "Musician" },
+    {
+        question: "Would you rather live in the city or the countryside?",
+        option1: "City",
+        option2: "Countryside",
+        percentage1: 60, // Custom percentage for option 1
+        percentage2: 40  // Custom percentage for option 2
+    },
+    {
+        question: "Would you rather be able to fly or be invisible?",
+        option1: "Fly",
+        option2: "Invisible",
+        percentage1: 70, // Custom percentage for option 1
+        percentage2: 30  // Custom percentage for option 2
+    },
+    {
+        question: "Would you rather have a pet dragon or a pet unicorn?",
+        option1: "Dragon",
+        option2: "Unicorn",
+        percentage1: 55, // Custom percentage for option 1
+        percentage2: 45  // Custom percentage for option 2
+    },
+    {
+        question: "Would you rather have unlimited money or unlimited time?",
+        option1: "Unlimited Money",
+        option2: "Unlimited Time",
+        percentage1: 80, // Custom percentage for option 1
+        percentage2: 20  // Custom percentage for option 2
+    },
+    {
+        question: "Would you rather be a famous actor or a famous musician?",
+        option1: "Actor",
+        option2: "Musician",
+        percentage1: 50, // Custom percentage for option 1
+        percentage2: 50  // Custom percentage for option 2
+    },
 ];
 
 let currentQuestionIndex = 0;
@@ -22,48 +52,43 @@ function displayQuestion() {
 // Handle Answer Selection
 function handleAnswer(answer) {
     if (!canAnswer) {
-        showErrorPopup();
+        showPopup("⚠️ Error: Please wait before selecting again.");
         return;
     }
 
     canAnswer = false;
+
+    // Get the predefined percentages for the current question
+    const percentage1 = questions[currentQuestionIndex].percentage1;
+    const percentage2 = questions[currentQuestionIndex].percentage2;
+
+    // Update the text of both options with percentages
+    document.getElementById("option1").innerText = `${questions[currentQuestionIndex].option1} - ${percentage1}%`;
+    document.getElementById("option2").innerText = `${questions[currentQuestionIndex].option2} - ${percentage2}%`;
+
+    // Show the selected answer and percentage
     document.getElementById("selected-answer").innerText = answer;
-    const percentage = Math.floor(Math.random() * 100);
-    document.getElementById("percentage").innerText = `Chosen by: ${percentage}% of users`;
-
-    // Update the selected option text with the percentage
-    if (answer === questions[currentQuestionIndex].option1) {
-        document.getElementById("option1").innerText = `${questions[currentQuestionIndex].option1} - ${percentage}%`;
-    } else {
-        document.getElementById("option2").innerText = `${questions[currentQuestionIndex].option2} - ${percentage}%`;
-    }
-
+    document.getElementById("percentage").innerText = `Chosen by: ${answer === questions[currentQuestionIndex].option1 ? percentage1 : percentage2}% of users`;
     document.getElementById("result").classList.remove("hidden");
 
+    // Show success popup after 2 seconds
     setTimeout(() => {
+        showPopup("✅ Loaded Next Question");
         currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
         displayQuestion();
-        showSuccessPopup();
         canAnswer = true;
     }, 2000);
 }
 
-// Show Error Popup
-function showErrorPopup() {
-    const errorPopup = document.getElementById("error-popup");
-    errorPopup.classList.remove("hidden");
+// Show Inline Popup
+function showPopup(message) {
+    const popup = document.getElementById("inline-popup");
+    const popupText = document.getElementById("popup-text");
+    popupText.innerText = message;
+    popup.classList.remove("hidden");
     setTimeout(() => {
-        errorPopup.classList.add("hidden");
-    }, 2000);
-}
-
-// Show Success Popup
-function showSuccessPopup() {
-    const successPopup = document.getElementById("success-popup");
-    successPopup.classList.remove("hidden");
-    setTimeout(() => {
-        successPopup.classList.add("hidden");
-    }, 2000);
+        popup.classList.add("hidden");
+    }, 3000); // Fade out after 3 seconds
 }
 
 // Dark Mode Toggle
